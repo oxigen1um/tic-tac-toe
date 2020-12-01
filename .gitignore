@@ -5,3 +5,4 @@ cmake-build-debug/
 tic_tac_toe.qbs
 tic_tac_toe.qbs.user
 *.autosave
+config.h
