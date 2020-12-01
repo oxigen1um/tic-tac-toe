@@ -2,3 +2,6 @@
 CMakeLists.txt
 .DS_Store
 cmake-build-debug/
+tic_tac_toe.qbs
+tic_tac_toe.qbs.user
+*.autosave
