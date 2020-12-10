@@ -16,5 +16,4 @@ private:
     void click(Graph_lib::Address a);
 };
 
-
 #endif //GAME_H

@@ -9,13 +9,13 @@
     attach(btn);
 }
 
-void Game::cb_button(Graph_lib::Address a, Graph_lib::Address b) {
+void Game::cb_button(Graph_lib::Address a, Graph_lib::Address b)
+{
     Graph_lib::reference_to<Game>(b).click(a);
 }
 
 void Game::click(Graph_lib::Address a) {
     //Graph_lib::reference_to<Fl_Widget>(a).color(Graph_lib::Color::red);
     btn.label = "hi";
-
 }
 
