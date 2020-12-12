@@ -1,8 +1,8 @@
 #include <iostream>
-#include <ctime>
+#include "constants.h"
 using namespace std;
 
-const int side = 15;
+const int side = field_side; // using different name of variable for conciseness
 
 /*
  * 0 - пусто
@@ -111,7 +111,7 @@ bool rt_d(int (&m)[side][side], const int h, const int w)// */*
     if (iter == 5) return true;
     else return false;
 }
-
+void print(int (&m)[side][side]);
 bool check_end(int (&m)[side][side],const int height,const int width)
 // аргументы: матрица поля, координаты последнего хода (высота, ширина)
 {
@@ -121,6 +121,7 @@ bool check_end(int (&m)[side][side],const int height,const int width)
     if(!res) res = lt_d(m, height, width); // Проверка по левой диагонали *\*
     if(!res) res = rt_d(m, height, width); // Проверка по правой диагонали */*
 
+    //print(m);
     return res;
 }
 
@@ -134,24 +135,23 @@ void print(int (&m)[side][side])
     }
 
 }
-int main()
-{
-    srand(time(NULL));
-    int m[side][side];
-    for(int i = 0; i < side; ++i)
-        for(int j = 0; j < side; ++j)
-            m[i][j] = 0;
-
-    m[4][4] = 1;
-    m[3][5] = 1;
-    m[2][6] = 1;
-    m[1][7] = 1;
-    m[0][8] = 1;
-    //проверить на конец
-    bool res = check_end(m, 2, 6); // добавить if на наличие значения в клетке
-    print(m);
-
-    if(res) cout<<"YES";
-    else cout<<"NO";
-    return 0;
-}
+//int main()
+//{
+//    int m[side][side];
+//    for(int i = 0; i < side; ++i)
+//        for(int j = 0; j < side; ++j)
+//            m[i][j] = 0;
+//
+//    m[4][4] = 1;
+//    m[3][5] = 1;
+//    m[2][6] = 1;
+//    m[1][7] = 1;
+//    m[0][8] = 1;
+//    //проверить на конец
+//    bool res = check_end(m, 2, 6); // добавить if на наличие значения в клетке
+//    print(m);
+//
+//    if(res) cout<<"YES";
+//    else cout<<"NO";
+//    return 0;
+//}

@@ -6,7 +6,6 @@
 #include <FL/Graph.h>
 #include <FL/GUI.h>
 
-
 #include <string>
 
 #endif //GAME_CONFIG_H

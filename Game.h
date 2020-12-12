@@ -1,19 +1,50 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <iostream>
+#include "Game_window.h"
 #include "config.h"
+#include "constants.h"
+#include "Cell.h"
 
-class Game : public Graph_lib::Window {
-
+class Game : public Game_window {
 public:
-    Game(Graph_lib::Point p, int width, int height, std::string title);
+    Game(Graph_lib::Point xy);
+
+    void update_state (Graph_lib::Point p, int type);
+
+    Cell& at (Graph_lib::Point p);
+
+    static constexpr int N = field_side;
+    static constexpr int N_max = 20;
+
+    static_assert (N <= N_max, "do not allow board larger than N_max by N_max");
+
+    void toggle_current_player() { current_player = (current_player % 2) + 1; } // 1 => 2 or 2 => 1
+
+    void init_new_game();
+
+
+    int get_current_player() const { return current_player; }
 
 private:
-    int board_size{10};
-    Graph_lib::Button btn;
-    static void cb_button(Graph_lib::Address, Graph_lib::Address);
+    static constexpr int margin = 30;
+    static constexpr int width = N * Cell::size + 2 * margin + 70;
+    static constexpr int height = (N * Cell::size + 2 * margin) + 50;
 
-    void click(Graph_lib::Address a);
+    Graph_lib::Vector_ref<Cell> cells; // Vector of link
+
+    int game_state[field_side][field_side];
+    int current_player = 1; // 1 - for 'x' and  2 - for 'o'
+    int clicked_buttons = 0;
+
+    static void cb_clicked (Graph_lib::Address widget, Graph_lib::Address win)
+    {
+        Graph_lib::reference_to<Game>(win).clicked(widget);
+    }
+
+    void clicked (Graph_lib::Address widget);
+
 };
 
 #endif //GAME_H

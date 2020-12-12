@@ -8,26 +8,25 @@
 class Cell : public Graph_lib::Button
 {
 public:
-    enum Type {black, white};
 
-    Cell (Graph_lib::Point xy, Graph_lib::Callback cb, Type t);
+    Cell (Graph_lib::Point xy, Graph_lib::Callback cb, Graph_lib::Point arr_pos);
 
     void attach(Graph_lib::Window& win) override;
 
-    void activate(){ if (pw) pw->color (FL_SELECTION_COLOR);}
-    void deactivate(){ reset_color(); }
+    bool is_full() const { return full; }
+    void set_full(bool value) { full = value; }
 
-    bool is_black() const { return type == black;}
-    Graph_lib::Point center() const { return Graph_lib::Point{ loc.x + width/2,
-                                                    loc.y + height/2};}
+    void toogle_full() { full = !full; }
+
+    Graph_lib::Point center() const { return Graph_lib::Point{ loc.x + width/2,loc.y + height/2};}
     static constexpr int size = 40;
 
-private:
-    Type type;
-    void reset_color();
-};
+    Graph_lib::Point get_point() const { return array_pos; }
 
-Cell::Type type_of_cell (int i, int j);
+private:
+    bool full = false;
+    Graph_lib::Point array_pos;
+};
 
 #endif // CELL_H
 
