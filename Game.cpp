@@ -61,6 +61,8 @@ void Game::init_new_game(std::string type)
         cells[i].label = "";
     }
 
+    clicked_buttons = 0; // update condition of draw end
+
     Fl::redraw();
 }
 
@@ -95,11 +97,11 @@ void Game::clicked (Graph_lib::Address widget)
 //        std::cout << array_pos.x << " " << array_pos.y << std::endl;
 
 
-        // todo: update game state
+        // update game state
 
         update_state(array_pos, get_current_player());
 
-        // todo: check_end
+        // check end of game condition
         bool is_finished = check_end(game_state, array_pos.x, array_pos.y);
 
         if (is_finished)
@@ -118,11 +120,12 @@ void Game::clicked (Graph_lib::Address widget)
         }
         else
             toggle_current_player();
+
+        clicked_buttons += 1;
     }
 
-    clicked_buttons += 1;
 
-    if (clicked_buttons >= field_side * field_side)
+    if (clicked_buttons == field_side * field_side)
     {
         init_new_game("draw");
     }
