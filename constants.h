@@ -9,7 +9,7 @@
 
 constexpr int offset_top = 50; // [px]
 
-constexpr int field_side = 15; // quantity of game cells on each side
+constexpr int field_side = 5; // quantity of game cells on each side
 
 
 

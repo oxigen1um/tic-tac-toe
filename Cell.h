@@ -18,7 +18,7 @@ public:
 
     void toogle_full() { full = !full; }
 
-    Graph_lib::Point center() const { return Graph_lib::Point{ loc.x + width/2,loc.y + height/2};}
+    Graph_lib::Point center() const { return Graph_lib::Point{ loc.x + width / 2,loc.y + height / 2};}
     static constexpr int size = 40;
 
     Graph_lib::Point get_point() const { return array_pos; }

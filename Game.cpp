@@ -2,10 +2,16 @@
 #include "constants.h"
 #include "config.h"
 #include "algo.cpp"
+#include "Alert.h"
 
 Game::Game (Graph_lib::Point xy)
         : Game_window{ xy, width, height, "Tic-Tac-Toe" }
+        , restart_button{ Graph_lib::Point{ x_max() - 80, 115 }, 70, 25, "Restart", cb_restart }
+        , button_pushed{false}
 {
+
+    attach (restart_button);
+
     size_range (width, height, width, height); // fixed window size
     for (int i = 0; i < N; ++i)
         for (int j = 0; j < N; ++j)
@@ -26,10 +32,22 @@ Game::Game (Graph_lib::Point xy)
 // create figures here, later
 }
 
-void Game::init_new_game()
+
+void Game::init_new_game(std::string type)
 {
 
+    if (type == "winner" || type == "draw")
+    {
+        std::string str;
+
+        if (type == "draw") str = "It's a draw!";
+        else if (current_player == 1) str = "Player 1 win!";
+        else str = "Player 2 win!";
+
+    Alert winner{Graph_lib::Point{200, 200}, 200, 100, "Game over", str}; //make widget => press ok button => FL::redraw();
     wait_for_button();
+    }
+
 
     current_player = 1; // reset current player
     tt.set_label("1");
@@ -43,12 +61,8 @@ void Game::init_new_game()
         cells[i].label = "";
     }
 
-    //Graph_lib::Window winner{Graph_lib::Point{200, 200}, 200, 100, "someone won"};
-    // make widget => press ok button => FL::redraw();
-
     Fl::redraw();
 }
-
 
 
 void Game::clicked (Graph_lib::Address widget)
@@ -91,7 +105,16 @@ void Game::clicked (Graph_lib::Address widget)
         if (is_finished)
         {
             std::cout << "Winner: " << get_current_player() << std::endl;
-            init_new_game();
+
+             //Graph_lib::Line l = {Graph_lib::Point{w.x(), w.y()}, Graph_lib::Point{w.x() - 50, w.y() - 50}};
+
+           // l.set_color(Graph_lib::Color::red);
+
+
+           // attach (l);
+            init_new_game("winner");
+
+            //detach(l);
         }
         else
             toggle_current_player();
@@ -101,7 +124,7 @@ void Game::clicked (Graph_lib::Address widget)
 
     if (clicked_buttons >= field_side * field_side)
     {
-        std::cout << "Draw" << std::endl;
+        init_new_game("draw");
     }
 
 }

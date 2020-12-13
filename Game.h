@@ -11,6 +11,8 @@ class Game : public Game_window {
 public:
     Game(Graph_lib::Point xy);
 
+    Graph_lib::Button restart_button;
+
     void update_state (Graph_lib::Point p, int type);
 
     Cell& at (Graph_lib::Point p);
@@ -22,12 +24,33 @@ public:
 
     void toggle_current_player() { current_player = (current_player % 2) + 1; } // 1 => 2 or 2 => 1
 
-    void init_new_game();
+    void init_new_game(std::string type);
+
+    void wait_for_button()
+    {
+        while (!button_pushed) Fl::wait();
+        button_pushed = false;
+        Fl::redraw();
+    }
+
 
 
     int get_current_player() const { return current_player; }
 
 private:
+    bool button_pushed = false;
+
+    static void cb_restart (Graph_lib::Address, Graph_lib::Address addr)
+    {
+        Graph_lib::reference_to<Game>(addr).handle_restart();
+    }
+
+    void handle_restart()
+    {
+        button_pushed = true;
+        init_new_game("0");
+    }
+
     static constexpr int margin = 30;
     static constexpr int width = N * Cell::size + 2 * margin + 70;
     static constexpr int height = (N * Cell::size + 2 * margin) + 50;
