@@ -24,31 +24,27 @@ public:
 
     void toggle_current_player() { current_player = (current_player % 2) + 1; } // 1 => 2 or 2 => 1
 
-    void init_new_game(std::string type);
-
-    void wait_for_button()
-    {
-        while (!button_pushed) Fl::wait();
-        button_pushed = false;
-        Fl::redraw();
-    }
-
-
+    void init_new_game();
 
     int get_current_player() const { return current_player; }
 
+    Graph_lib::Rectangle rect{Graph_lib::Point{0, 0}, width, 70};
+    Graph_lib::Text t{Graph_lib::Point{30, 50}, ""};
+
+
 private:
-    bool button_pushed = false;
+    bool cells_blocked = false;
+
+    void handle_restart()
+    {
+        init_new_game();
+        detach( rect );
+        detach(t);
+    }
 
     static void cb_restart (Graph_lib::Address, Graph_lib::Address addr)
     {
         Graph_lib::reference_to<Game>(addr).handle_restart();
-    }
-
-    void handle_restart()
-    {
-        button_pushed = true;
-        init_new_game("0");
     }
 
     static constexpr int margin = 30;
@@ -63,11 +59,10 @@ private:
 
     static void cb_clicked (Graph_lib::Address widget, Graph_lib::Address win)
     {
-        Graph_lib::reference_to<Game>(win).clicked(widget);
+            Graph_lib::reference_to<Game>(win).clicked(widget);
     }
 
     void clicked (Graph_lib::Address widget);
-
 };
 
 #endif //GAME_H

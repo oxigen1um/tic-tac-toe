@@ -3,8 +3,6 @@
 
 #include "config.h"
 
-//using Graph_lib::Point;
-
 class Cell : public Graph_lib::Button
 {
 public:
@@ -16,7 +14,7 @@ public:
     bool is_full() const { return full; }
     void set_full(bool value) { full = value; }
 
-    void toogle_full() { full = !full; }
+    void toggle_full() { full = !full; }
 
     Graph_lib::Point center() const { return Graph_lib::Point{ loc.x + width / 2,loc.y + height / 2};}
     static constexpr int size = 40;

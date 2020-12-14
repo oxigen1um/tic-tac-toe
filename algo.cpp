@@ -121,37 +121,5 @@ bool check_end(int (&m)[side][side],const int height,const int width)
     if(!res) res = lt_d(m, height, width); // Проверка по левой диагонали *\*
     if(!res) res = rt_d(m, height, width); // Проверка по правой диагонали */*
 
-    //print(m);
     return res;
 }
-
-void print(int (&m)[side][side])
-{
-    for(int i = 0; i < side; ++i)
-    {
-        for(int j = 0; j < side; ++j)
-            cout << m[i][j] << " ";
-        cout<<endl;
-    }
-
-}
-//int main()
-//{
-//    int m[side][side];
-//    for(int i = 0; i < side; ++i)
-//        for(int j = 0; j < side; ++j)
-//            m[i][j] = 0;
-//
-//    m[4][4] = 1;
-//    m[3][5] = 1;
-//    m[2][6] = 1;
-//    m[1][7] = 1;
-//    m[0][8] = 1;
-//    //проверить на конец
-//    bool res = check_end(m, 2, 6); // добавить if на наличие значения в клетке
-//    print(m);
-//
-//    if(res) cout<<"YES";
-//    else cout<<"NO";
-//    return 0;
-//}
