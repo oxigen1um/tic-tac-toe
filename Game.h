@@ -31,7 +31,6 @@ public:
     Graph_lib::Rectangle rect{Graph_lib::Point{0, 0}, width, 70};
     Graph_lib::Text t{Graph_lib::Point{30, 50}, ""};
 
-
 private:
     bool cells_blocked = false;
 
@@ -51,7 +50,7 @@ private:
     static constexpr int width = N * Cell::size + 2 * margin + 70;
     static constexpr int height = (N * Cell::size + 2 * margin) + 50;
 
-    Graph_lib::Vector_ref<Cell> cells; // Vector of link
+    Graph_lib::Vector_ref<Cell> cells;
 
     int game_state[field_side][field_side];
     int current_player = 1; // 1 - for 'x' and  2 - for 'o'
