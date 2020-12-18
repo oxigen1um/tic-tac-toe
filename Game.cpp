@@ -1,7 +1,7 @@
 #include "Game.h"
 #include "constants.h"
 #include "config.h"
-#include "algo.cpp"
+#include "algo.h"
 
 Game::Game (Graph_lib::Point xy)
         : Game_window{ xy, width, height, "Tic-Tac-Toe" }

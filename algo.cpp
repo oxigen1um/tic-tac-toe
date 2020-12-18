@@ -1,8 +1,4 @@
-#include <iostream>
-#include "constants.h"
-using namespace std;
-
-const int side = field_side; // using different name of variable for conciseness
+#include "algo.h"
 
 /*
  * 0 - пусто
@@ -111,7 +107,7 @@ bool rt_d(int (&m)[side][side], const int h, const int w)// */*
     if (iter == 5) return true;
     else return false;
 }
-void print(int (&m)[side][side]);
+
 bool check_end(int (&m)[side][side],const int height,const int width)
 // аргументы: матрица поля, координаты последнего хода (высота, ширина)
 {
