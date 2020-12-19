@@ -2,10 +2,14 @@
 #include "constants.h"
 #include "config.h"
 #include "algo.h"
+#include <sstream>
 
 Game::Game (Graph_lib::Point xy)
         : Game_window{ xy, width, height, "Tic-Tac-Toe" }
         , restart_button{ Graph_lib::Point{ x_max() - 80, 115 }, 70, 25, "Restart", cb_restart }
+        , current_player{&p1}
+        , p1{1, 'X', &p2}
+        , p2{2, 'O', &p1}
 {
 
     attach (restart_button);
@@ -34,14 +38,15 @@ Game::Game (Graph_lib::Point xy)
 
 void Game::init_new_game()
 {
-    current_player = 1; // reset current player
-    tt.set_label("1");
+    current_player = &p1; // reset current player
+    tt.set_label(std::to_string(current_player->id));
 
     for(int i = 0; i < field_side; ++i)
         for(int j = 0; j < field_side; ++j)
             game_state[i][j] = 0;
 
-    for (int i = 0; i < cells.size(); ++i) {
+    for (int i = 0; i < cells.size(); ++i)
+    {
         cells[i].set_full(false);
         cells[i].label = "";
     }
@@ -66,36 +71,27 @@ void Game::clicked (Graph_lib::Address widget)
 
         if (!c.is_full()) {
 
-            // fill cell with symbol
-            if (get_current_player() == 1) {
-                c.label = 'X';
-                tt.set_label("2");
-            } else {
-                c.label = 'O';
-                tt.set_label("1");
-            }
+            c.label = current_player->label; // current
+            tt.set_label(std::to_string(current_player->next->id)); // next
 
             c.toggle_full();
             Fl::redraw();
 
             // update game state
-            update_state(array_pos, get_current_player());
+            update_state(array_pos, current_player->id);
 
             // check end of game condition
             bool is_finished = check_end(game_state, array_pos.x, array_pos.y);
 
             if (is_finished) {
-                std::cout << "Winner: " << get_current_player() << std::endl;
-
-                int current_player = get_current_player();
-                std::string message = "";
+                std::cout << "Winner: " << current_player->id << std::endl;
 
                 cells_blocked = true;
 
-                if (current_player == 1)
-                    message = "Winner player: 1";
-                else
-                    message = "Winner player: 2";
+                std::ostringstream oss;
+
+                oss << "Winner player: " << current_player->id;
+                std::string message = oss.str();
 
                 t.set_label(message);
 
