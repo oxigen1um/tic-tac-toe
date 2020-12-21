@@ -3,6 +3,7 @@
 #include "config.h"
 #include "algo.h"
 #include <sstream>
+#include <memory>
 
 Game::Game (Graph_lib::Point xy)
         : Game_window{ xy, width, height, "Tic-Tac-Toe" }
@@ -24,10 +25,14 @@ Game::Game (Graph_lib::Point xy)
     for (int i = 0; i < N; ++i)
         for (int j = 0; j < N; ++j)
         {
-            cells.push_back(new Cell{Graph_lib::Point{margin + j * Cell::size,
-                                                      (margin + (N - 1 - i) * Cell::size) + offset_top},
-                                            cb_clicked, Graph_lib::Point{ field_side - 1 - i, j }}); // we use (field_side - 1 - i) because we store cell in 1-dimensional array but algorithm calculates the winner using matrix
-            attach(cells[cells.size() - 1]);
+             std::unique_ptr<Cell> cell {new Cell{Graph_lib::Point{margin + j * Cell::size,
+                                                   (margin + (N - 1 - i) * Cell::size) + offset_top},
+                                  cb_clicked, Graph_lib::Point{ field_side - 1 - i, j }} };
+
+            // throw...
+
+            attach(*cell);
+            cells.push_back(cell.release());
         }
 
     // initial game state
